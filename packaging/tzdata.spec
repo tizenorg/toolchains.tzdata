@@ -12,7 +12,7 @@ URL: ftp://elsie.nci.nih.gov/pub/
 # test suite.  It is occasionally updated from glibc sources, and as
 # such is under LGPLv2+, but none of this ever gets to be part of
 # final zoneinfo files.
-Source0: tzdata-base-0.tar.bz2
+Source0: %{name}-%{version}.tar.bz2
 # These are official upstream.
 Source1: ftp://elsie.nci.nih.gov/pub/tzdata%{tzdata_version}.tar.gz
 Source2: ftp://elsie.nci.nih.gov/pub/tzcode%{tzcode_version}.tar.gz
@@ -23,7 +23,7 @@ This package contains data files with rules for various timezones around
 the world.
 
 %prep
-%setup -q -n tzdata
+%setup -q -n %{name}-%{version}
 mkdir tzdata%{tzdata_version}
 tar xzf %{SOURCE1} -C tzdata%{tzdata_version}
 mkdir tzcode%{tzcode_version}
