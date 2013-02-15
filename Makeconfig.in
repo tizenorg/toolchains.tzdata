@@ -1,0 +1,13 @@
+objpfx := @objpfx@
+datadir := @datadir@
+install_root := @install_root@
+AWK := awk
+built-program-cmd := /usr/sbin/zic
+cross-compiling := no
+have-ksh := yes
++force =
+leapseconds = /dev/null
+posixrules = America/New_York
+posixrules-file = posixrules
+zonedir := $(datadir)/zoneinfo
+inst_zonedir := $(install_root)$(zonedir)
