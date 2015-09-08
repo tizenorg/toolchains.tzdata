@@ -1,0 +1,49 @@
+diff -ru tzdata2014j.org/asia tzdata2014j/asia
+--- tzdata2014j.org/asia	2014-11-01 11:51:05.000000000 +0900
++++ tzdata2014j/asia	2015-01-16 16:29:55.152804990 +0900
+@@ -524,6 +524,8 @@
+ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
+ 			6:00	-	XJT
+ 
++# Nowadays, China Standard Time is known as "Beijing Time"
++Zone   Asia/Beijing    8:00    PRC C%sT
+ 
+ # Hong Kong (Xianggang)
+ 
+diff -ru tzdata2014j.org/backward tzdata2014j/backward
+--- tzdata2014j.org/backward	2014-08-17 14:48:03.000000000 +0900
++++ tzdata2014j/backward	2015-01-16 16:31:50.884804977 +0900
+@@ -92,14 +92,13 @@
+ Link	Pacific/Auckland	NZ
+ Link	Pacific/Chatham		NZ-CHAT
+ Link	America/Denver		Navajo
+-Link	Asia/Shanghai		PRC
++Link	Asia/Beijing		PRC
+ Link	Pacific/Pohnpei		Pacific/Ponape
+ Link	Pacific/Pago_Pago	Pacific/Samoa
+ Link	Pacific/Chuuk		Pacific/Truk
+ Link	Pacific/Chuuk		Pacific/Yap
+ Link	Europe/Warsaw		Poland
+ Link	Europe/Lisbon		Portugal
+-Link	Asia/Taipei		ROC
+ Link	Asia/Seoul		ROK
+ Link	Asia/Singapore		Singapore
+ Link	Europe/Istanbul		Turkey
+diff -ru tzdata2014j.org/zone.tab tzdata2014j/zone.tab
+--- tzdata2014j.org/zone.tab	2014-10-14 12:43:59.000000000 +0900
++++ tzdata2014j/zone.tab	2015-01-16 17:18:24.048804643 +0900
+@@ -143,8 +143,12 @@
+ CL	-3327-07040	America/Santiago	most locations
+ CL	-2709-10926	Pacific/Easter	Easter Island
+ CM	+0403+00942	Africa/Douala
+-CN	+3114+12128	Asia/Shanghai	Beijing Time
+-CN	+4348+08735	Asia/Urumqi	Xinjiang Time
++CN	+3955+11626 Asia/Beijing	China Standard Time
++CN	+3114+12128	Asia/Shanghai	China east	
++CN	+4545+12641	Asia/Harbin	China north
++CN	+2934+10635	Asia/Chongqing	China mountains
++CN	+4348+08735	Asia/Urumqi	China Xinjiang-Tibet
++CN	+3929+07559	Asia/Kashgar	China west Xinjiang
+ CO	+0436-07405	America/Bogota
+ CR	+0956-08405	America/Costa_Rica
+ CU	+2308-08222	America/Havana

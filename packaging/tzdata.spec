@@ -1,50 +1,59 @@
-Summary: Timezone data
-Name: tzdata
-Version: 2011h
-%define tzdata_version %{version}
-%define tzcode_version 2011g
-Release: 1
-License: Public Domain
-Group: System/Base
-URL: ftp://elsie.nci.nih.gov/pub/
+Summary:      Timezone data
+Name:         tzdata
+Version:      2014j
+Release:      1
+License:      PD
+Group:        System/Base
+URL:          http://www.iana.org/time-zones
 
-# The tzdata-base-0.tar.bz2 is a simple building infrastructure and
-# test suite.  It is occasionally updated from glibc sources, and as
-# such is under LGPLv2+, but none of this ever gets to be part of
-# final zoneinfo files.
-Source0: %{name}-%{version}.tar.bz2
+Source0: %{name}-%{version}.tar.gz
 # These are official upstream.
-Source1: ftp://elsie.nci.nih.gov/pub/tzdata%{tzdata_version}.tar.gz
-Source2: ftp://elsie.nci.nih.gov/pub/tzcode%{tzcode_version}.tar.gz
+Source1: ftp://ftp.iana.org/tz/releases/tzdata%{version}.tar.gz
+Source2: ftp://ftp.iana.org/tz/releases/tzcode%{version}.tar.gz
+Patch1:         tzdata-china-2014.patch 
+Patch2:         iso3166-uk-2014.patch 
 BuildArch: noarch
+%global AREA    Etc
+%global ZONE    UTC
 
 %description
 This package contains data files with rules for various timezones around
 the world.
 
 %prep
-%setup -q -n %{name}-%{version}
-mkdir tzdata%{tzdata_version}
-tar xzf %{SOURCE1} -C tzdata%{tzdata_version}
-mkdir tzcode%{tzcode_version}
-tar xzf %{SOURCE2} -C tzcode%{tzcode_version}
-sed -e 's|@objpfx@|'`pwd`'/obj/|' \
-    -e 's|@datadir@|%{_datadir}|' \
-  Makeconfig.in > Makeconfig
+%setup -c -T -b 1 -b 2
+%patch1 -p1
+%patch2 -p1
 
+sed -ri 's@/usr/local/etc/zoneinfo@%{_datadir}/zoneinfo@g' *
 
 %build
-make
+unset ${!LC_*}
+LANG=POSIX
+LC_ALL=POSIX
+AREA=%{AREA}
+ZONE=%{ZONE}
+export AREA LANG LC_ALL ZONE
+make %{?_smp_mflags} TZDIR=%{_datadir}/zoneinfo CFLAGS="$RPM_OPT_FLAGS -DHAVE_GETTEXT=1 -DTM_GMTOFF=tm_gmtoff -DTM_ZONE=tm_zone" AWK=awk
+make %{?_smp_mflags} TZDIR=zoneinfo AWK=awk zones
+# Generate posixrules
+./zic -y ./yearistype -d zoneinfo -p %{AREA}/%{ZONE}
 
 %install
-rm -fr $RPM_BUILD_ROOT
-sed -i 's|@install_root@|%{buildroot}|' Makeconfig
-make install
+rm -fr %{buildroot}
+mkdir -p %{buildroot}%{_datadir}/zoneinfo
+cp -a zoneinfo %{buildroot}%{_datadir}/zoneinfo/posix
+cp -al %{buildroot}%{_datadir}/zoneinfo/posix/. %{buildroot}%{_datadir}/zoneinfo
+cp -a zoneinfo-leaps %{buildroot}%{_datadir}/zoneinfo/right
+rm -f  %{buildroot}%{_datadir}/zoneinfo/posixrules
+ln -sf /etc/localtime      %{buildroot}%{_datadir}/zoneinfo/posixrules
+install -m 644 iso3166.tab %{buildroot}%{_datadir}/zoneinfo/iso3166.tab
+install -m 644 zone.tab    %{buildroot}%{_datadir}/zoneinfo/zone.tab
+#mkdir -p %{buildroot}/etc
+#rm -f  %{buildroot}/etc/localtime
+#cp -fp %{buildroot}%{_datadir}/zoneinfo/%{AREA}/%{ZONE} %{buildroot}/etc/localtime
 
 %check
-echo ====================TESTING=========================
-make check
-echo ====================TESTING END=====================
 
 %clean
 rm -rf %{buildroot}
@@ -52,4 +61,3 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{_datadir}/zoneinfo
-

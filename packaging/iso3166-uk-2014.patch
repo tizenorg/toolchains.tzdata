@@ -1,0 +1,12 @@
+diff -ru tzdata2014j.org/iso3166.tab tzdata2014j/iso3166.tab
+--- tzdata2014j.org/iso3166.tab	2014-07-19 05:31:54.000000000 +0900
++++ tzdata2014j/iso3166.tab	2015-01-16 17:25:47.240804590 +0900
+@@ -100,7 +100,7 @@
+ FO	Faroe Islands
+ FR	France
+ GA	Gabon
+-GB	Britain (UK)
++GB	United Kingdom
+ GD	Grenada
+ GE	Georgia
+ GF	French Guiana
