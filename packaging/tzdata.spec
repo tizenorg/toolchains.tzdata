@@ -1,17 +1,17 @@
-Summary:      Timezone data
-Name:         tzdata
-Version:      2014j
-Release:      1
-License:      PD
-Group:        System/Base
-URL:          http://www.iana.org/time-zones
+Summary: Timezone data
+Name:    tzdata
+Version: 2014j
+Release: 1
+License: PD
+Group:   System/Base
+URL:     http://www.iana.org/time-zones
 
 Source0: %{name}-%{version}.tar.gz
 # These are official upstream.
 Source1: ftp://ftp.iana.org/tz/releases/tzdata%{version}.tar.gz
 Source2: ftp://ftp.iana.org/tz/releases/tzcode%{version}.tar.gz
-Patch1:         tzdata-china-2014.patch 
-Patch2:         iso3166-uk-2014.patch 
+Patch1:         tzdata-china-2014.patch
+Patch2:         iso3166-uk-2014.patch
 BuildArch: noarch
 %global AREA    Etc
 %global ZONE    UTC
@@ -52,8 +52,6 @@ install -m 644 zone.tab    %{buildroot}%{_datadir}/zoneinfo/zone.tab
 #mkdir -p %{buildroot}/etc
 #rm -f  %{buildroot}/etc/localtime
 #cp -fp %{buildroot}%{_datadir}/zoneinfo/%{AREA}/%{ZONE} %{buildroot}/etc/localtime
-
-%check
 
 %clean
 rm -rf %{buildroot}

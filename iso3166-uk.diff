@@ -1,0 +1,11 @@
+--- timezone-2013g.orig/iso3166.tab
++++ timezone-2013g/iso3166.tab
+@@ -100,7 +100,7 @@ FM	Micronesia
+ FO	Faroe Islands
+ FR	France
+ GA	Gabon
+-GB	Britain (UK)
++GB	United Kingdom
+ GD	Grenada
+ GE	Georgia
+ GF	French Guiana
